@@ -1,6 +1,6 @@
 # Chunzheng Li — Academic Homepage
 
-A lightweight academic homepage for **Chunzheng Li**, inspired by [Gaoyue Zhou's homepage](https://gaoyuezhou.github.io/) and the academic homepage layout popularized by [Jon Barron](https://jonbarron.info/). The HTML, CSS, JavaScript, and conceptual SVG thumbnails were written for this website; reference-site code and personal content were not copied.
+A lightweight academic homepage for **Chunzheng Li**, inspired by [Gaoyue Zhou's homepage](https://gaoyuezhou.github.io/) and the academic homepage layout popularized by [Jon Barron](https://jonbarron.info/). Reference-site code and personal content were not copied.
 
 Website: https://chunzheng2022.github.io/
 
@@ -21,6 +21,8 @@ Open http://127.0.0.1:8080/ . You can also open `index.html` directly; clipboard
 - **Email / Google Scholar / CV:** add your real links inside `.profile-links` in `index.html`. These links are intentionally omitted until supplied.
 - **Colors, spacing, mobile layout:** edit `styles.css`.
 - **Paper thumbnails:** replace the corresponding image files and update their alt text and dimensions.
+- **Photography:** add photos to `photography/images/` and list them in `photography/photos.json`. See [the photography guide](photography/README.md).
+- **Portrait QR:** `images/portrait-qr.svg` scans to the homepage. It combines ImageGen artwork with an exact QR sampling layer. Rebuild it with `node scripts/build-portrait-qr.mjs`; the source matrix is in `scripts/qr-matrix.json`.
 
 The page works without JavaScript. `script.js` only enhances citation copying. Citations open with the native HTML `details` element, including on mobile and with a keyboard.
 
@@ -37,12 +39,15 @@ Biography and publication information comes from public profile, repository, and
 | Ph.D. status, Soochow University, current interests | [GitHub profile](https://github.com/ChunZheng2022) |
 | Scope-WM authors, title, year, abstract | [arXiv:2609.33218](https://arxiv.org/abs/2609.33218) |
 | FS²D authors, journal, year, pages, ORCID | [Publisher DOI](https://doi.org/10.1109/LRA.2025.3560868), [Crossref metadata](https://api.crossref.org/works/10.1109/LRA.2025.3560868) |
-| MB3D preprint metadata | [SSRN DOI](https://doi.org/10.2139/ssrn.4988978), [Crossref metadata](https://api.crossref.org/works/10.2139/ssrn.4988978) |
 | SGF3D authors, journal, year, article number | [Publisher DOI](https://doi.org/10.1016/j.imavis.2023.104895), [Crossref metadata](https://api.crossref.org/works/10.1016/j.imavis.2023.104895) |
 | Code and project descriptions | Public repositories linked on the homepage |
 
 - `images/profile.png`: the original photo supplied by Chunzheng Li for this homepage, preserved without image alterations. The displayed circular crop uses CSS to focus on the face.
 - `images/scope-wm.png`: Figure 2 (method overview) from the user's [Scope-WM paper](https://arxiv.org/html/2609.33218v1#Sx3.F2), reproduced as a thumbnail linking to the paper. Rights remain with the original authors.
-- `images/fs2d.svg`, `images/mb3d.svg`, and `images/sgf3d.svg`: original **conceptual illustrations**, not experimental visualizations or reproductions of paper figures.
+- `images/fs2d-architecture.png`: Figure 2 on page 3 of the FS²D PDF supplied by the user.
+- `images/sgf3d-architecture.png`: Figure 2 on page 3 of the SGF3D PDF supplied by the user.
+- `images/portrait-qr-art.png`: built-in ImageGen artwork based on the user's selfie and visual QR reference.
+- `images/portrait-qr.svg`: the portrait artwork plus the exact QR sampling and control patterns, generated with `scripts/build-portrait-qr.mjs`.
+- [Asset provenance, extraction coordinates, generation prompt, and verification](docs/ASSET_PROVENANCE.md).
 
-Scope-WM and MB3D are labeled as preprints. No conference acceptance, advisor, award, unprovided contact address, or CV is assumed. MB3D uses the verified SSRN record; update it if a newer published record is available.
+Scope-WM is labeled as a preprint. No conference acceptance, advisor, award, unprovided contact address, or CV is assumed. The two paper figures retain their original authors' and publishers' rights. The full supplied PDFs and original selfie are not published in this repository.

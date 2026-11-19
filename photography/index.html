@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Photography · Chunzheng Li</title>
+  <meta name="description" content="Photography by Chunzheng Li. A collection of moments, places, and small details.">
+  <link rel="canonical" href="https://chunzheng2022.github.io/photography/">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=gallery-20261119">
+  <link rel="stylesheet" href="gallery.css">
+  <script src="gallery.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to photographs</a>
+  <div class="gallery-page">
+    <nav class="gallery-nav" aria-label="Main navigation">
+      <a href="../">Chunzheng Li</a>
+      <a href="../#research">Research</a>
+    </nav>
+    <main id="main">
+      <header class="gallery-heading">
+        <h1>Photography</h1>
+        <p>Small moments, through my lens.</p>
+      </header>
+      <div class="gallery-empty" id="gallery-empty">
+        <p>Photographs coming soon.</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid" aria-label="Photographs" hidden></div>
+      <noscript><p class="gallery-note">Enable JavaScript to browse the photo collection when photographs are available.</p></noscript>
+    </main>
+    <footer>
+      <p>Photographs by Chunzheng Li.</p>
+      <p><a href="../">Back to homepage</a></p>
+    </footer>
+  </div>
+  <dialog class="photo-dialog" id="photo-dialog" aria-label="Photograph viewer">
+    <div class="dialog-top"><button type="button" id="photo-close">Close</button></div>
+    <figure>
+      <img id="photo-full" alt="">
+      <figcaption id="photo-caption"></figcaption>
+    </figure>
+    <nav class="photo-controls" aria-label="Photograph navigation" hidden>
+      <button type="button" id="photo-previous">Previous</button>
+      <span id="photo-counter" aria-live="polite"></span>
+      <button type="button" id="photo-next">Next</button>
+    </nav>
+  </dialog>
+</body>
+</html>

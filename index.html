@@ -14,13 +14,16 @@
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://chunzheng2022.github.io/">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=portrait-20261119">
+  <link rel="stylesheet" href="styles.css?v=gallery-20261119">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <main id="main" class="page">
     <header class="profile" id="about">
+      <a class="portrait" href="images/profile.png" aria-label="View Chunzheng Li's full photo">
+        <img src="images/profile.png" alt="Chunzheng Li" width="180" height="180" fetchpriority="high">
+      </a>
       <div class="bio">
         <h1>Chunzheng Li</h1>
         <!-- Add your advisor, lab, education, and email here when ready. -->
@@ -33,12 +36,17 @@
           <a href="https://orcid.org/0009-0004-0729-0669">ORCID</a>
           <span aria-hidden="true">/</span>
           <a href="#research">Publications</a>
+          <span aria-hidden="true">/</span>
+          <a href="photography/">Photography</a>
         </nav>
         <!-- Optional links: add a real mailto:, Google Scholar profile, and CV PDF. -->
       </div>
-      <a class="portrait" href="images/profile.png" aria-label="View Chunzheng Li's full photo">
-        <img src="images/profile.png" alt="Chunzheng Li" width="240" height="240" fetchpriority="high">
-      </a>
+      <figure class="qr-card">
+        <a href="images/portrait-qr.svg" aria-label="Open the portrait QR code for this homepage">
+          <img src="images/portrait-qr.svg" alt="A black-and-white portrait QR code of Chunzheng Li, linking to this homepage" width="196" height="196">
+        </a>
+        <figcaption>Scan my homepage</figcaption>
+      </figure>
     </header>
 
     <section id="research" aria-labelledby="research-heading">
@@ -73,7 +81,7 @@
 
         <article class="paper" aria-labelledby="fs2d-title">
           <a class="paper-image" href="https://doi.org/10.1109/LRA.2025.3560868" tabindex="-1" aria-hidden="true">
-            <img src="images/fs2d.svg" alt="Conceptual illustration of sparse point cloud feature matching for few-shot 3D object detection" width="480" height="320" loading="lazy">
+            <img src="images/fs2d-architecture.png" alt="FS2D Figure 2: fully sparse few-shot detection architecture, showing training and inference" width="1275" height="810" loading="lazy">
           </a>
           <div class="paper-content">
             <h3 id="fs2d-title"><a href="https://doi.org/10.1109/LRA.2025.3560868">FS<sup>2</sup>D: Fully Sparse Few-Shot 3D Object Detection</a></h3>
@@ -98,33 +106,9 @@
           </div>
         </article>
 
-        <article class="paper" aria-labelledby="mb3d-title">
-          <a class="paper-image" href="https://doi.org/10.2139/ssrn.4988978" tabindex="-1" aria-hidden="true">
-            <img src="images/mb3d.svg" alt="Conceptual illustration of balancing LiDAR and pseudo-point features for 3D object detection" width="480" height="320" loading="lazy">
-          </a>
-          <div class="paper-content">
-            <h3 id="mb3d-title"><a href="https://doi.org/10.2139/ssrn.4988978">MB3D: Improving Pseudo-Point-Based 3D Object Detection through Modal Balancing</a></h3>
-            <p class="authors"><strong>Chunzheng Li</strong>, Gaihua Wang</p>
-            <p class="venue"><em>SSRN preprint</em>, 2024</p>
-            <p class="paper-links"><a href="https://doi.org/10.2139/ssrn.4988978">Paper</a><span aria-hidden="true"> / </span><a href="https://github.com/ChunZheng2022/MB3D">Code</a></p>
-            <p class="summary">Investigating modal balancing to improve pseudo-point-based multimodal 3D object detection.</p>
-            <details class="citation">
-              <summary>BibTeX</summary>
-              <div class="citation-body"><button class="copy-citation" type="button" aria-label="Copy MB3D BibTeX citation" hidden>Copy</button><pre><code>@misc{li2024mb3d,
-  title   = {{MB3D}: Improving Pseudo-Point-Based 3D Object Detection
-             through Modal Balancing},
-  author  = {Li, Chunzheng and Wang, Gaihua},
-  publisher = {SSRN},
-  year    = {2024},
-  doi     = {10.2139/ssrn.4988978}
-}</code></pre></div>
-            </details>
-          </div>
-        </article>
-
         <article class="paper" aria-labelledby="sgf3d-title">
           <a class="paper-image" href="https://doi.org/10.1016/j.imavis.2023.104895" tabindex="-1" aria-hidden="true">
-            <img src="images/sgf3d.svg" alt="Conceptual illustration of similarity-guided cross-modal fusion for 3D detection" width="480" height="320" loading="lazy">
+            <img src="images/sgf3d-architecture.png" alt="SGF3D Figure 2: point and pseudo-point streams, cross-modal attention fusion, and the similarity attention head" width="1137" height="702" loading="lazy">
           </a>
           <div class="paper-content">
             <h3 id="sgf3d-title"><a href="https://doi.org/10.1016/j.imavis.2023.104895">SGF3D: Similarity-guided Fusion Network for 3D Object Detection</a></h3>
