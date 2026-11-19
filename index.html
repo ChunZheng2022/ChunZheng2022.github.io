@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Chunzheng Li</title>
+  <meta name="description" content="Chunzheng Li is a Ph.D. student at Soochow University working on embodied AI, agent perception, world models, and 3D vision.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Chunzheng Li">
+  <meta property="og:description" content="Embodied AI · Agent Perception · World Models · 3D Vision">
+  <meta property="og:url" content="https://chunzheng2022.github.io/">
+  <meta property="og:image" content="https://chunzheng2022.github.io/images/profile.jpg">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://chunzheng2022.github.io/">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <main id="main" class="page">
+    <header class="profile" id="about">
+      <div class="bio">
+        <h1>Chunzheng Li</h1>
+        <!-- Add your advisor, lab, education, and email here when ready. -->
+        <p>I am a Ph.D. student at <a href="https://eng.suda.edu.cn/">Soochow University</a>. My research focuses on <strong>embodied AI</strong>, <strong>agent perception</strong>, and <strong>world models</strong>.</p>
+        <p>I aim to endow agents with multimodal perception and action, enabling them to understand the world and reshape it.</p>
+        <p>My previous work explores multimodal 3D object detection, few-shot learning, and point cloud perception.</p>
+        <nav class="profile-links" aria-label="Profile links">
+          <a href="https://github.com/ChunZheng2022">GitHub</a>
+          <span aria-hidden="true">/</span>
+          <a href="https://orcid.org/0009-0004-0729-0669">ORCID</a>
+          <span aria-hidden="true">/</span>
+          <a href="#research">Publications</a>
+        </nav>
+        <!-- Optional links: add a real mailto:, Google Scholar profile, and CV PDF. -->
+      </div>
+      <a class="portrait" href="https://github.com/ChunZheng2022" aria-label="Chunzheng Li on GitHub">
+        <img src="images/profile.jpg" alt="Chunzheng Li's GitHub avatar" width="240" height="240" fetchpriority="high">
+      </a>
+    </header>
+
+    <section id="research" aria-labelledby="research-heading">
+      <h2 id="research-heading">Research</h2>
+      <p class="research-intro">I am interested in how agents perceive, predict, and act in the physical world. My current work studies efficient visual world models for planning, building on my background in multimodal 3D perception.</p>
+
+      <div class="publications">
+        <article class="paper" aria-labelledby="scope-title">
+          <a class="paper-image" href="https://arxiv.org/abs/2609.33218" tabindex="-1" aria-hidden="true">
+            <img src="images/scope-wm.png" alt="Overview of Scope-WM's token selection, sparse dynamics, and planning pipeline" width="1187" height="465" loading="lazy">
+          </a>
+          <div class="paper-content">
+            <h3 id="scope-title"><a href="https://arxiv.org/abs/2609.33218">Scope-WM: Scoped Computation for Efficient Visual World Models</a></h3>
+            <p class="authors"><strong>Chunzheng Li</strong>, Zesheng Jia, Hongda Zhang, Jiaying Tang, Yuntian Wang, Siao Liu, Jin Wang</p>
+            <p class="venue"><em>arXiv preprint</em>, 2026</p>
+            <p class="paper-links"><a href="https://arxiv.org/abs/2609.33218">Paper</a><span aria-hidden="true"> / </span><a href="https://github.com/ChunZheng2022/Scope-WM">Code</a></p>
+            <p class="summary">An efficient visual world model that focuses prediction on task-relevant tokens, updates background context with lightweight dynamics, and reuses promising action sequences during planning.</p>
+            <details class="citation">
+              <summary>BibTeX</summary>
+              <div class="citation-body"><button class="copy-citation" type="button" aria-label="Copy Scope-WM BibTeX citation" hidden>Copy</button><pre><code>@article{li2026scopewm,
+  title   = {Scope-WM: Scoped Computation for Efficient Visual World Models},
+  author  = {Li, Chunzheng and Jia, Zesheng and Zhang, Hongda and
+             Tang, Jiaying and Wang, Yuntian and Liu, Siao and Wang, Jin},
+  journal = {arXiv preprint arXiv:2609.33218},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2609.33218},
+  url     = {https://arxiv.org/abs/2609.33218}
+}</code></pre></div>
+            </details>
+          </div>
+        </article>
+
+        <article class="paper" aria-labelledby="fs2d-title">
+          <a class="paper-image" href="https://doi.org/10.1109/LRA.2025.3560868" tabindex="-1" aria-hidden="true">
+            <img src="images/fs2d.svg" alt="Conceptual illustration of sparse point cloud feature matching for few-shot 3D object detection" width="480" height="320" loading="lazy">
+          </a>
+          <div class="paper-content">
+            <h3 id="fs2d-title"><a href="https://doi.org/10.1109/LRA.2025.3560868">FS<sup>2</sup>D: Fully Sparse Few-Shot 3D Object Detection</a></h3>
+            <p class="authors"><strong>Chunzheng Li</strong>, Gaihua Wang, Zeng Liang, Qian Long, Zhengshu Zhou, Xuran Pan</p>
+            <p class="venue"><em>IEEE Robotics and Automation Letters (RA-L)</em>, 2025</p>
+            <p class="paper-links"><a href="https://doi.org/10.1109/LRA.2025.3560868">Paper</a><span aria-hidden="true"> / </span><a href="https://github.com/ChunZheng2022/FS2D">Code</a></p>
+            <p class="summary">Fully sparse feature matching and aggregation bring few-shot learning to outdoor 3D object detection without adding inference parameters.</p>
+            <details class="citation">
+              <summary>BibTeX</summary>
+              <div class="citation-body"><button class="copy-citation" type="button" aria-label="Copy FS2D BibTeX citation" hidden>Copy</button><pre><code>@article{li2025fs2d,
+  title   = {{FS}$^2${D}: Fully Sparse Few-Shot 3D Object Detection},
+  author  = {Li, Chunzheng and Wang, Gaihua and Liang, Zeng and
+             Long, Qian and Zhou, Zhengshu and Pan, Xuran},
+  journal = {IEEE Robotics and Automation Letters},
+  volume  = {10},
+  number  = {6},
+  pages   = {5847--5854},
+  year    = {2025},
+  doi     = {10.1109/LRA.2025.3560868}
+}</code></pre></div>
+            </details>
+          </div>
+        </article>
+
+        <article class="paper" aria-labelledby="mb3d-title">
+          <a class="paper-image" href="https://doi.org/10.2139/ssrn.4988978" tabindex="-1" aria-hidden="true">
+            <img src="images/mb3d.svg" alt="Conceptual illustration of balancing LiDAR and pseudo-point features for 3D object detection" width="480" height="320" loading="lazy">
+          </a>
+          <div class="paper-content">
+            <h3 id="mb3d-title"><a href="https://doi.org/10.2139/ssrn.4988978">MB3D: Improving Pseudo-Point-Based 3D Object Detection through Modal Balancing</a></h3>
+            <p class="authors"><strong>Chunzheng Li</strong>, Gaihua Wang</p>
+            <p class="venue"><em>SSRN preprint</em>, 2024</p>
+            <p class="paper-links"><a href="https://doi.org/10.2139/ssrn.4988978">Paper</a><span aria-hidden="true"> / </span><a href="https://github.com/ChunZheng2022/MB3D">Code</a></p>
+            <p class="summary">Investigating modal balancing to improve pseudo-point-based multimodal 3D object detection.</p>
+            <details class="citation">
+              <summary>BibTeX</summary>
+              <div class="citation-body"><button class="copy-citation" type="button" aria-label="Copy MB3D BibTeX citation" hidden>Copy</button><pre><code>@article{li2024mb3d,
+  title   = {{MB3D}: Improving Pseudo-Point-Based 3D Object Detection
+             through Modal Balancing},
+  author  = {Li, Chunzheng and Wang, Gaihua},
+  journal = {SSRN Electronic Journal},
+  year    = {2024},
+  doi     = {10.2139/ssrn.4988978}
+}</code></pre></div>
+            </details>
+          </div>
+        </article>
+
+        <article class="paper" aria-labelledby="sgf3d-title">
+          <a class="paper-image" href="https://doi.org/10.1016/j.imavis.2023.104895" tabindex="-1" aria-hidden="true">
+            <img src="images/sgf3d.svg" alt="Conceptual illustration of similarity-guided cross-modal fusion for 3D detection" width="480" height="320" loading="lazy">
+          </a>
+          <div class="paper-content">
+            <h3 id="sgf3d-title"><a href="https://doi.org/10.1016/j.imavis.2023.104895">SGF3D: Similarity-guided Fusion Network for 3D Object Detection</a></h3>
+            <p class="authors"><strong>Chunzheng Li</strong>, Gaihua Wang, Qian Long, Zhengshu Zhou</p>
+            <p class="venue"><em>Image and Vision Computing</em>, 2024</p>
+            <p class="paper-links"><a href="https://doi.org/10.1016/j.imavis.2023.104895">Paper</a><span aria-hidden="true"> / </span><a href="https://github.com/ChunZheng2022/SGF3D">Code</a></p>
+            <p class="summary">Similarity-guided cross-modal attention aligns point cloud and pseudo-point cloud features to improve multimodal 3D detection.</p>
+            <details class="citation">
+              <summary>BibTeX</summary>
+              <div class="citation-body"><button class="copy-citation" type="button" aria-label="Copy SGF3D BibTeX citation" hidden>Copy</button><pre><code>@article{li2024sgf3d,
+  title   = {{SGF3D}: Similarity-guided fusion network for 3D object detection},
+  author  = {Li, Chunzheng and Wang, Gaihua and Long, Qian and Zhou, Zhengshu},
+  journal = {Image and Vision Computing},
+  volume  = {142},
+  pages   = {104895},
+  year    = {2024},
+  doi     = {10.1016/j.imavis.2023.104895}
+}</code></pre></div>
+            </details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">More Code</h2>
+      <p><a class="project-title" href="https://github.com/ChunZheng2022/ACO-Sampling">ACO-Sampling</a> <span class="project-description">A point cloud sampling method.</span></p>
+      <p class="all-code"><a href="https://github.com/ChunZheng2022?tab=repositories">All repositories on GitHub</a></p>
+    </section>
+
+    <footer>
+      <p>Layout inspired by <a href="https://gaoyuezhou.github.io/">Gaoyue Zhou</a> and <a href="https://jonbarron.info/">Jon Barron</a>.</p>
+      <p><a href="https://github.com/ChunZheng2022/ChunZheng2022.github.io">Website source</a></p>
+    </footer>
+  </main>
+  <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
+</body>
+</html>
