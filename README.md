@@ -22,7 +22,7 @@ Open http://127.0.0.1:8080/ . You can also open `index.html` directly; clipboard
 - **Colors, spacing, mobile layout:** edit `styles.css`.
 - **Paper thumbnails:** replace the corresponding image files and update their alt text and dimensions.
 - **Photography:** add photos to `photography/images/` and list them in `photography/photos.json`. See [the photography guide](photography/README.md).
-- **Portrait QR:** `images/portrait-qr.svg` scans to the homepage. The face emerges from density changes within a continuous black-and-white pixel mosaic, with QR sampling restored across the entire image. Rebuild it with `node scripts/build-portrait-qr.mjs`; the source matrix is in `scripts/qr-matrix.json`.
+- **Portrait QR:** `images/portrait-qr.svg` scans to the homepage. The user's night waterfront photograph and raised-arm pose emerge from density changes within a continuous black-and-white pixel mosaic, with QR sampling restored across the entire image. Rebuild it with `node scripts/build-portrait-qr.mjs`; the source matrix is in `scripts/qr-matrix.json`.
 
 The page works without JavaScript. `script.js` only enhances citation copying. Citations open with the native HTML `details` element, including on mobile and with a keyboard.
 
@@ -46,7 +46,7 @@ Biography and publication information comes from public profile, repository, and
 - `images/scope-wm.png`: Figure 2 (method overview) from the user's [Scope-WM paper](https://arxiv.org/html/2609.33218v1#Sx3.F2), reproduced as a thumbnail linking to the paper. Rights remain with the original authors.
 - `images/fs2d-architecture.png`: Figure 2 on page 3 of the FS²D PDF supplied by the user.
 - `images/sgf3d-architecture.png`: Figure 2 on page 3 of the SGF3D PDF supplied by the user.
-- `images/portrait-qr-art.png`: built-in ImageGen artwork based on the user's selfie and visual QR reference.
+- `images/portrait-qr-art.png`: built-in ImageGen artwork based on the user's night waterfront photograph and visual QR reference.
 - `images/portrait-qr.svg`: the portrait artwork plus the exact QR sampling and control patterns, generated with `scripts/build-portrait-qr.mjs`.
 - [Asset provenance, extraction coordinates, generation prompt, and verification](docs/ASSET_PROVENANCE.md).
 
