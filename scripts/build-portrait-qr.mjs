@@ -1,4 +1,4 @@
-// Generate an exact QR sampling layer over the ImageGen portrait artwork.
+// Restore QR sampling and controls around the simplified ImageGen portrait.
 // Rebuild with: node scripts/build-portrait-qr.mjs (no packages required).
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +23,11 @@ for (let row = 0; row < cells; row++) {
     const control = quiet || (x <= 8 && y <= 8) || (x >= n - 8 && y <= 8)
       || (x <= 8 && y >= n - 8) || x === 6 || y === 6 || x === 8 || y === 8
       || (Math.abs(x - 34) <= 2 && Math.abs(y - 34) <= 2);
+    // Keep the low-positioned pixel head clear of extra dot texture.
+    // Error correction H handles the data modules covered by this portrait.
+    const inPortrait = ((col / cells - 0.50) / 0.16) ** 2
+      + ((row / cells - 0.71) / 0.23) ** 2 < 1;
+    if (!control && inPortrait) continue;
     const side = pitch * (control ? 1.002 : core);
     const inset = (pitch - side) / 2;
     const fill = quiet || !matrix[row][col] ? 'white' : 'black';
