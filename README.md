@@ -17,7 +17,7 @@ Open http://127.0.0.1:8080/ . You can also open `index.html` directly; clipboard
 ## Updating the homepage
 
 - **Biography, papers, links, and BibTeX:** edit `index.html`.
-- **Portrait:** replace `images/profile.jpg` with your preferred square portrait.
+- **Portrait:** replace `images/profile.png` with your preferred photo. Adjust `.portrait img` in `styles.css` to set the crop. The circular crop is applied with CSS; clicking the portrait opens the unchanged full photo.
 - **Email / Google Scholar / CV:** add your real links inside `.profile-links` in `index.html`. These links are intentionally omitted until supplied.
 - **Colors, spacing, mobile layout:** edit `styles.css`.
 - **Paper thumbnails:** replace the corresponding image files and update their alt text and dimensions.
@@ -30,7 +30,7 @@ Use the `ChunZheng2022/ChunZheng2022.github.io` repository. In **Settings → Pa
 
 ## Content sources and assets
 
-Only publicly available profile, repository, and publication information was used. The display name was supplied by Chunzheng Li. No unpublished research from other local projects is included.
+Biography and publication information comes from public profile, repository, and publication sources. The display name and portrait were supplied by Chunzheng Li. No unpublished research from other local projects is included.
 
 | Content | Source |
 | --- | --- |
@@ -41,7 +41,7 @@ Only publicly available profile, repository, and publication information was use
 | SGF3D authors, journal, year, article number | [Publisher DOI](https://doi.org/10.1016/j.imavis.2023.104895), [Crossref metadata](https://api.crossref.org/works/10.1016/j.imavis.2023.104895) |
 | Code and project descriptions | Public repositories linked on the homepage |
 
-- `images/profile.jpg`: the user's public [GitHub avatar](https://avatars.githubusercontent.com/u/54513016?v=4).
+- `images/profile.png`: the original photo supplied by Chunzheng Li for this homepage, preserved without image alterations. The displayed circular crop uses CSS to focus on the face.
 - `images/scope-wm.png`: Figure 2 (method overview) from the user's [Scope-WM paper](https://arxiv.org/html/2609.33218v1#Sx3.F2), reproduced as a thumbnail linking to the paper. Rights remain with the original authors.
 - `images/fs2d.svg`, `images/mb3d.svg`, and `images/sgf3d.svg`: original **conceptual illustrations**, not experimental visualizations or reproductions of paper figures.
 
