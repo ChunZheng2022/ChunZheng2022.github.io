@@ -1,6 +1,6 @@
 # Homepage asset provenance
 
-Updated 2026-11-19 at the user's request. The homepage now lists Scope-WM, FS²D, and SGF3D. The former placeholder illustrations have been replaced by actual paper architecture figures. The user's existing night portrait is displayed on the left; the new portrait QR is on the right.
+Updated 2026-11-24 at the user's request. The homepage lists Scope-WM, FS²D, and SGF3D, with actual paper architecture figures. The user's existing night portrait is displayed on the left; the two-stage line-drawing QR is on the right.
 
 ## Paper figures
 
@@ -27,6 +27,7 @@ The extracted figures were visually inspected against complete rendered source p
 
 - Image generation mode: **built-in ImageGen**, no API/CLI fallback.
 - Current identity and composition input: the user's supplied night waterfront photograph, including the raised-arm pose. Earlier selfie-based revisions are recorded below.
+- Current intermediate: `images/portrait-line-art.png`, a standalone simplified drawing generated before the QR fusion stage.
 - Style input: the user's supplied monochrome portrait QR reference; its subject was not used as the identity.
 - Structure input: a real QR template encoding `https://chunzheng2022.github.io/`.
 - Artwork output: `images/portrait-qr-art.png`, 1254 × 1254 pixels.
@@ -84,6 +85,28 @@ The selected artwork replaces `images/portrait-qr-art.png` (1254 × 1254). The f
 
 ```text
 Use case: style-transfer / identity-preserve. Create a square black-and-white QR pixel artwork using Image 1, the man's nighttime waterfront photograph, as the source image, and Image 2 ONLY as the drawing-technique reference. Preserve Image 1's relaxed natural face, short hairstyle, upper body on the right, and raised arm reaching toward the upper left holding a bottle. Keep the source composition approximately: head centered around 65% across and 56% down, arm diagonally crossing toward the left, torso extending toward the bottom. Do not enlarge the face into a close-up. Let the skyline and water appear only as very faint broad shapes. Render the ENTIRE scene solely through one continuous field of moderately coarse BLACK AND WHITE SQUARE QR PIXELS, matching the halftone mosaic method of Image 2. The source photograph must look softly blurred and hidden UNDER the QR texture, with the person and gesture emerging only from subtle variations in pixel density. Square black and white pixels must cross the entire face, eyes, forehead, cheeks, shirt, arm and background uniformly; no separate portrait panel, no clean white face oval, no cutout, no clear facial outline, no cartoon, no pasted photo. Favor the natural pose and recognizable silhouette over fine facial details. Keep low facial contrast and quiet eyes, friendly and understated, not a sharply detailed staring face. Lift the dark night scene before translating to halftone so the result has balanced black and white pixels everywhere, not large solid black areas. Approximately 100-120 micro-pixel cells across the QR field, all regions use similar pixel scale, no microscopic skin stippling. Three large crisp square corner finder patterns and one small bottom-right alignment marker, even white quiet margin, no text, no watermark, no color. This is a unified QR mosaic with a faint photograph concealed within it.
+```
+
+## Two-stage line drawing revision — 2026-11-24
+
+The user requested an explicit sequence: first simplify the night photograph into a line drawing, then bury that drawing's contours in QR pixels. Both stages used the built-in ImageGen tool, with no CLI/API fallback.
+
+1. `images/profile.png` was converted to `images/portrait-line-art.png` (1254 × 1254). The drawing retains the person on the right, raised arm and bottle, a few skyline contours, and the waterfront railing. Photographic tones, dark sky, and shirt graphics were removed in favor of simple black contours on white.
+2. That saved drawing was then supplied to a second ImageGen call, together with the user's QR style reference. Its contours were broken into chains and clusters within a continuous QR-like texture. This stage did not receive the original photograph as an input. The result replaces `images/portrait-qr-art.png` (1254 × 1254).
+3. The existing deterministic QR builder produced `images/portrait-qr.svg`, retaining its full-field 0.50-module sampling cores and solid quiet-zone borders. No separate face area is cleared.
+
+The standalone drawing and the final artwork were visually inspected. ZXing-C++ 3.1.1 decoded the final SVG rendered at **156, 176, 196, and 640 pixels**, both normally and after a 3 × 3 Gaussian blur at sigma 0.45. All decoded values were `https://chunzheng2022.github.io/`. Prior website revisions remain in Git history. The left-side original photograph and photography gallery are unchanged.
+
+### Stage 1 prompt — built-in ImageGen
+
+```text
+Use case: style-transfer / identity-preserve. Convert the supplied night waterfront photograph into a clean minimalist black line drawing (Chinese jianbihua / 简笔画) on a plain WHITE square canvas. This is stage one only: NO QR code, NO halftone, NO pixels. Preserve the original photograph's composition and identity: the same relaxed young man on the right, short hair, natural gentle smile, head around 65% across and 55% down, torso extending to the bottom, one arm raised diagonally left holding the bottle. Use a small number of smooth confident black contour strokes to describe his face, hair outline, shoulders, T-shirt, arm, hand and bottle. Simplify the facial features into a few subtle short lines while retaining his actual face shape; no exaggerated staring eyes, no caricature or emoji. Hair should be a light outline with only a few short strokes, not a large solid black mass. Simplify the shirt to its outline and a few folds, omit the printed graphic and lettering. Indicate the distant skyline, water and railing with only a few thin unobtrusive lines; remove the photographic night darkness completely. Plenty of white negative space, no filled black backgrounds, no hatching, no gray shading, no photoreal texture. Consistent fine-to-medium line weight, calm friendly editorial sketch, no extra people, no words, no watermark. Keep the face at the source photograph's natural small scale, do not crop or enlarge it into a close-up.
+```
+
+### Stage 2 prompt — built-in ImageGen
+
+```text
+Use case: compositing / style-transfer. This is stage two of a requested two-stage process. Image 1 is the finished minimalist LINE DRAWING made from the user's photograph; preserve its actual line geometry, the man on the right, his raised arm and bottle on the left, and the few skyline and railing lines. Image 2 supplies ONLY the continuous QR square-pixel texture technique. Transform Image 1 into one square black-and-white QR artwork by BURYING THE SKETCH'S LINES INSIDE THE QR MODULE PATTERN. The sketch must not sit visibly on top of the code, and there must be no separate portrait area. Convert each sketch contour into partially interrupted and occluded chains of QR-like square pixels: let 60-75% of the original continuous lines disappear into the pixel field, so the pose is discovered subtly by following slightly denser aligned pixel clusters. Keep the interior of the face, arm and shirt filled with the SAME QR-style noise as the surrounding background; do not cut out white skin or a white shirt-shaped hole. Use the simplified sketch's contours only, no photographic skin tone, no realistic face shading, no dense halftone photograph, no cartoon sticker. At close range this is a fairly uniform field of square black and white pixels; at thumbnail size the simple line drawing's outline and raised-arm pose emerge softly. Keep a moderate pixel density and approximately 100-120 micro-pixel cells across the field, rather than microscopic dots. Give the hidden contour clusters enough structure to recognize the head, bottle and arm without making the face sharp or intense. Preserve the drawing's natural placement and small face size in the lower-right part of the image. A few broken skyline contours may remain behind the raised arm. Three large crisp square QR corner finders, one smaller bottom-right alignment marker, a clean even white quiet margin. Pure black and white only, no text, no visible separate frame, no watermark. The desired technique is simplified linework woven into QR pixels, with one uninterrupted texture across the entire scene.
 ```
 
 ## Photography
