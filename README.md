@@ -22,7 +22,7 @@ Open http://127.0.0.1:8080/ . You can also open `index.html` directly; clipboard
 - **Colors, spacing, mobile layout:** edit `styles.css`.
 - **Paper thumbnails:** replace the corresponding image files and update their alt text and dimensions.
 - **Photography:** add photos to `photography/images/` and list them in `photography/photos.json`. See [the photography guide](photography/README.md).
-- **Portrait QR:** `images/portrait-qr.svg` scans to the homepage. The night waterfront photograph was first simplified into `images/portrait-line-art.png`; its contours were then woven into QR pixels, with exact QR sampling restored across the entire image. Rebuild the final SVG with `node scripts/build-portrait-qr.mjs`; the source matrix is in `scripts/qr-matrix.json`.
+- **Portrait QR:** `images/portrait-qr.svg` scans to the homepage. The night waterfront photograph was first simplified into `images/portrait-line-art.png`; its contours were then woven into QR pixels and strengthened for readability at the displayed thumbnail size, with exact QR sampling restored across the entire image. Rebuild the final SVG with `node scripts/build-portrait-qr.mjs`; the source matrix is in `scripts/qr-matrix.json`.
 
 The page works without JavaScript. `script.js` only enhances citation copying. Citations open with the native HTML `details` element, including on mobile and with a keyboard.
 
