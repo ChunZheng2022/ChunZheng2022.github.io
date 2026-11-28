@@ -145,3 +145,25 @@ test("image fitting keeps portrait and landscape images inside the viewport", as
   assert.ok(mobileWidth > 0 && mobileWidth <= 343);
   assert.ok(mobileWidth * 2 / 3 <= 667 - 124);
 });
+
+test("the grid loads small previews while the viewer opens the full photograph", async (t) => {
+  const g = await gallery(t, [sample({
+    src: "images/full.jpg", thumbnail: "images/thumbnails/full.jpg", width: 1707, height: 2560,
+  })]);
+  const image = g.query(".gallery-photo img");
+  assert.equal(image.src, "https://chunzheng2022.github.io/photography/images/thumbnails/full.jpg");
+  assert.equal(image.width, 1707);
+  assert.equal(image.height, 2560);
+  g.click(".gallery-link");
+  assert.equal(g.query("#photo-full").src, "https://chunzheng2022.github.io/photography/images/full.jpg");
+});
+
+test("an invalid optional thumbnail falls back to the full image", async (t) => {
+  const g = await gallery(t, [sample({ thumbnail: "javascript:alert(1)" }), sample({ thumbnail: "http://[" })]);
+  const images = g.document.querySelectorAll(".gallery-photo img");
+  assert.equal(images.length, 2);
+  for (const image of images) {
+    assert.equal(image.src, "https://chunzheng2022.github.io/photography/images/sunset.jpg");
+    assert.equal(image.hasAttribute("width"), false);
+  }
+});

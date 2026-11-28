@@ -43,9 +43,21 @@
       return null;
     }
     if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+    let thumbnail = url;
+    if (text(entry.thumbnail)) {
+      try {
+        const candidate = new URL(entry.thumbnail, document.baseURI);
+        if (candidate.protocol === "https:" || candidate.protocol === "http:") thumbnail = candidate;
+      } catch {
+        // A bad optional preview must not hide an otherwise valid photograph.
+      }
+    }
     const owner = text(entry.copyright) || "Chunzheng Li";
     return {
       src: url.href,
+      thumbnail: thumbnail.href,
+      width: Number.isInteger(entry.width) && entry.width > 0 ? entry.width : null,
+      height: Number.isInteger(entry.height) && entry.height > 0 ? entry.height : null,
       alt: text(entry.alt),
       title: text(entry.title) || text(entry.caption) || text(entry.alt),
       copyright: owner.startsWith("©") ? owner : `© ${owner}`,
@@ -89,7 +101,7 @@
   });
 
   try {
-    const response = await fetch("photos.json");
+    const response = await fetch("photos.json", { cache: "no-cache" });
     if (!response.ok) throw new Error("Photo list is unavailable");
     const entries = await response.json();
     if (!Array.isArray(entries)) throw new Error("Photo list must be an array");
@@ -105,7 +117,11 @@
       link.href = photo.src;
       link.setAttribute("aria-label", `View ${photo.title}. ${photo.copyright}`);
       const image = document.createElement("img");
-      image.src = photo.src;
+      image.src = photo.thumbnail;
+      if (photo.width && photo.height) {
+        image.width = photo.width;
+        image.height = photo.height;
+      }
       image.alt = photo.alt;
       image.loading = "lazy";
       image.decoding = "async";

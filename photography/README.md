@@ -1,6 +1,6 @@
 # Adding photographs
 
-The gallery is available at https://chunzheng2022.github.io/photography/ . It currently shows an empty collection, without sample photos.
+The gallery is available at https://chunzheng2022.github.io/photography/ . Its first collection is **Tianping Mountain**, 15 photographs selected from the user's November 28, 2026 visit to Suzhou. Selection and export details are in [the collection notes](../docs/photography/tianping-mountain-20261128.md).
 
 1. Put your images in `photography/images/`.
 2. Add entries to `photography/photos.json` in your preferred display order:
@@ -19,6 +19,8 @@ The gallery is available at https://chunzheng2022.github.io/photography/ . It cu
 3. Commit and push to `main`. GitHub Pages publishes the changes automatically.
 
 Use a unique filename for each photo. `src` and descriptive `alt` text are required. `title` is the displayed photo name. `copyright` is the copyright owner, displayed with a single `©`; it defaults to `Chunzheng Li` when omitted. An existing `caption` still works as the title when `title` is omitted. If neither is supplied, `alt` is used as the title.
+
+For faster loading, you can optionally provide `thumbnail` (the preview image's path), plus `width` and `height` (the full image's oriented pixel dimensions). The grid loads the thumbnail and reserves the correct aspect ratio; opening a photo loads its full `src`. Existing entries without these fields continue to work. The Tianping Mountain exports use 900-pixel previews and 2560-pixel full images, measured along the longer edge. Original photographs and RAW files remain in the user's source folder.
 
 On desktop, hovering over a thumbnail reveals its title and copyright in white over a dark gradient; keyboard focus reveals the same information. On touch screens, these labels remain visible. Click a photo to enlarge it: its title and copyright appear at the bottom left, with the photo count at the bottom right. The viewer keeps the whole image visible at its original aspect ratio. Escape or Close exits, and the arrow keys or Previous/Next move between photos. No framework or build command is needed.
 
