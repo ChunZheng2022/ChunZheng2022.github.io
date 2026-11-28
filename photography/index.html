@@ -9,8 +9,9 @@
   <link rel="canonical" href="https://chunzheng2022.github.io/photography/">
   <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=gallery-20261119">
-  <link rel="stylesheet" href="gallery.css?v=credits-20261128">
-  <script src="gallery.js?v=tianping-20261128" defer></script>
+  <link rel="stylesheet" href="gallery.css?v=zoom-20261128">
+  <script src="photo-zoom.js?v=zoom-20261128" defer></script>
+  <script src="gallery.js?v=zoom-20261128" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to photographs</a>
@@ -36,9 +37,18 @@
     </footer>
   </div>
   <dialog class="photo-dialog" id="photo-dialog" aria-labelledby="photo-title" aria-describedby="photo-copyright">
-    <div class="dialog-top"><button type="button" id="photo-close" aria-label="Close photograph" autofocus><span aria-hidden="true">×</span></button></div>
+    <div class="dialog-top">
+      <div class="photo-zoom-tools">
+        <button type="button" id="photo-zoom-toggle" aria-pressed="false" disabled>Zoom in</button>
+        <span id="photo-zoom-level" class="photo-zoom-level" aria-live="polite">Fit</span>
+      </div>
+      <button type="button" id="photo-close" aria-label="Close photograph" autofocus><span aria-hidden="true">×</span></button>
+    </div>
     <figure class="photo-stage">
-      <img id="photo-full" alt="">
+      <div class="photo-viewport" id="photo-viewport" tabindex="0" aria-label="Photo detail view. Click to zoom, drag to explore, or use plus, minus, and zero keys.">
+        <img id="photo-full" alt="" draggable="false">
+        <span class="photo-load-status" id="photo-load-status" role="status" hidden>Loading photograph…</span>
+      </div>
       <figcaption class="photo-meta-row">
         <span id="photo-caption" class="lightbox-caption"><span id="photo-title" class="lightbox-title"></span> <span id="photo-copyright" class="lightbox-credit"></span></span>
         <span id="photo-counter" class="photo-counter" aria-live="polite"></span>

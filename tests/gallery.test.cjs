@@ -7,6 +7,7 @@ const { JSDOM } = require("../.preview/qa/node_modules/jsdom");
 const root = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(root, "photography/index.html"), "utf8");
 const script = fs.readFileSync(path.join(root, "photography/gallery.js"), "utf8");
+const zoomScript = fs.readFileSync(path.join(root, "photography/photo-zoom.js"), "utf8");
 const sample = (fields = {}) => ({ src: "images/sunset.jpg", alt: "Sunset over a lake", ...fields });
 
 async function gallery(t, entries, { supported = true, responseOk = true } = {}) {
@@ -27,6 +28,7 @@ async function gallery(t, entries, { supported = true, responseOk = true } = {})
     dialog.open = false;
     dialog.dispatchEvent(new window.Event("close"));
   };
+  window.eval(zoomScript);
   await window.eval(script);
   const document = window.document;
   const query = (selector) => document.querySelector(selector);
@@ -35,6 +37,22 @@ async function gallery(t, entries, { supported = true, responseOk = true } = {})
     return element.dispatchEvent(new window.MouseEvent("click", { bubbles: true, cancelable: true, ...init }));
   };
   return { window, document, dialog, warnings, query, click };
+}
+
+function loadPhoto(g) {
+  g.query("#photo-full").dispatchEvent(new g.window.Event("load"));
+}
+
+function zoomSurface(g) {
+  const viewport = g.query("#photo-viewport");
+  viewport.getBoundingClientRect = () => ({ left: 20, top: 30, width: 600, height: 400 });
+  const pointer = (type, id, x, y) => {
+    const event = new g.window.MouseEvent(type, { bubbles: true, button: 0, clientX: x, clientY: y });
+    Object.defineProperty(event, "pointerId", { value: id });
+    viewport.dispatchEvent(event);
+  };
+  const transform = () => g.query("#photo-full").style.transform;
+  return { viewport, pointer, transform };
 }
 
 test("thumbnail and viewer share the title and default copyright", async (t) => {
@@ -166,4 +184,121 @@ test("an invalid optional thumbnail falls back to the full image", async (t) => 
     assert.equal(image.src, "https://chunzheng2022.github.io/photography/images/sunset.jpg");
     assert.equal(image.hasAttribute("width"), false);
   }
+});
+
+test("click zoom preserves the chosen detail and toggles back to the whole photo", async (t) => {
+  const g = await gallery(t, [sample({ width: 2400, height: 1600 })]);
+  const z = zoomSurface(g);
+  g.click(".gallery-link");
+  const toggle = g.query("#photo-zoom-toggle");
+  assert.equal(toggle.disabled, true, "zoom waits for the full image");
+  loadPhoto(g);
+  assert.equal(toggle.disabled, false);
+  g.click(z.viewport, { clientX: 220, clientY: 130 });
+  // (200, 100) remains fixed: -300 + 200 * 2.5 = 200.
+  assert.equal(z.transform(), "translate(-300px, -150px) scale(2.5)");
+  assert.equal(g.query("#photo-zoom-level").textContent, "250%");
+  assert.equal(toggle.getAttribute("aria-pressed"), "true");
+  assert.equal(g.query("#photo-title").textContent, sample().alt);
+  g.click(z.viewport);
+  assert.equal(z.transform(), "translate(0px, 0px) scale(1)");
+  assert.equal(toggle.getAttribute("aria-pressed"), "false");
+  g.click(toggle);
+  assert.equal(z.transform(), "translate(-450px, -300px) scale(2.5)");
+  g.click(toggle);
+  assert.equal(g.query("#photo-zoom-level").textContent, "Fit");
+});
+
+test("dragging explores enlarged photos, clamps edges, and does not trigger click-to-reset", async (t) => {
+  const g = await gallery(t, [sample()]);
+  const z = zoomSurface(g);
+  g.click(".gallery-link");
+  loadPhoto(g);
+  g.click("#photo-zoom-toggle");
+  z.pointer("pointerdown", 1, 300, 200);
+  z.pointer("pointermove", 1, 400, 250);
+  assert.equal(z.transform(), "translate(-350px, -250px) scale(2.5)");
+  assert.equal(z.viewport.classList.contains("is-dragging"), true);
+  z.pointer("pointermove", 1, -10000, -10000);
+  assert.equal(z.transform(), "translate(-900px, -600px) scale(2.5)");
+  z.pointer("pointerup", 1, -10000, -10000);
+  g.click(z.viewport); // The click synthesized after releasing a drag.
+  assert.match(z.transform(), /scale\(2.5\)/);
+  assert.equal(z.viewport.classList.contains("is-dragging"), false);
+  z.pointer("pointerdown", 1, 200, 200);
+  z.pointer("pointerup", 1, 200, 200);
+  g.click(z.viewport);
+  assert.match(z.transform(), /scale\(1\)/);
+});
+
+test("wheel zoom stays within 1–4x and preserves Ctrl+wheel browser zoom", async (t) => {
+  const g = await gallery(t, [sample()]);
+  const z = zoomSurface(g);
+  g.click(".gallery-link");
+  loadPhoto(g);
+  const wheel = (deltaY, init = {}) => z.viewport.dispatchEvent(new g.window.WheelEvent("wheel", {
+    bubbles: true, cancelable: true, deltaY, clientX: 320, clientY: 230, ...init,
+  }));
+  assert.equal(wheel(-10000), false);
+  assert.equal(z.transform(), "translate(-900px, -600px) scale(4)");
+  assert.equal(wheel(10000, { ctrlKey: true }), true);
+  assert.match(z.transform(), /scale\(4\)/);
+  wheel(10000);
+  assert.equal(z.transform(), "translate(0px, 0px) scale(1)");
+});
+
+test("two-finger pinch retains its image anchor and continues as a one-finger pan", async (t) => {
+  const g = await gallery(t, [sample()]);
+  const z = zoomSurface(g);
+  g.click(".gallery-link");
+  loadPhoto(g);
+  z.pointer("pointerdown", 1, 220, 230);
+  z.pointer("pointerdown", 2, 420, 230);
+  z.pointer("pointermove", 1, 120, 230);
+  z.pointer("pointermove", 2, 520, 230);
+  assert.equal(z.transform(), "translate(-300px, -200px) scale(2)");
+  z.pointer("pointerup", 2, 520, 230);
+  z.pointer("pointermove", 1, 170, 250);
+  assert.equal(z.transform(), "translate(-250px, -180px) scale(2)");
+  z.pointer("pointercancel", 1, 170, 250);
+  assert.equal(z.viewport.classList.contains("is-dragging"), false);
+  g.click(z.viewport);
+  assert.match(z.transform(), /scale\(2\)/, "the touch gesture must not reset the zoom");
+});
+
+test("keyboard pans details, resets on navigation and close, and ignores late image loads", async (t) => {
+  const g = await gallery(t, [sample(), sample({ src: "images/second.jpg", title: "Second" })]);
+  const z = zoomSurface(g);
+  const key = (value) => g.dialog.dispatchEvent(new g.window.KeyboardEvent("keydown", {
+    bubbles: true, cancelable: true, key: value,
+  }));
+  g.click(".gallery-link");
+  loadPhoto(g);
+  key("+");
+  assert.match(z.transform(), /scale\(1.25\)/);
+  key("ArrowRight");
+  assert.equal(g.query("#photo-counter").textContent, "1 of 2", "arrows pan while zoomed");
+  assert.equal(z.transform(), "translate(-135px, -50px) scale(1.25)");
+  key("0");
+  key("ArrowRight");
+  assert.equal(g.query("#photo-counter").textContent, "2 of 2", "arrows navigate when fitted");
+  loadPhoto(g);
+  g.click("#photo-zoom-toggle");
+  g.click("#photo-next");
+  assert.equal(g.query("#photo-zoom-level").textContent, "Fit");
+  loadPhoto(g);
+  g.click("#photo-zoom-toggle");
+  g.click("#photo-close");
+  assert.equal(z.transform(), "translate(0px, 0px) scale(1)");
+  loadPhoto(g);
+  assert.equal(g.query("#photo-zoom-toggle").disabled, true);
+});
+
+test("failed full images disable zoom and display a readable status", async (t) => {
+  const g = await gallery(t, [sample()]);
+  g.click(".gallery-link");
+  g.query("#photo-full").dispatchEvent(new g.window.Event("error"));
+  assert.equal(g.query("#photo-zoom-toggle").disabled, true);
+  assert.equal(g.query("#photo-load-status").hidden, false);
+  assert.match(g.query("#photo-load-status").textContent, /could not be loaded/);
 });

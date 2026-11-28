@@ -8,15 +8,24 @@
   const title = document.getElementById("photo-title");
   const copyright = document.getElementById("photo-copyright");
   const controls = document.querySelector(".photo-controls");
+  const viewport = document.getElementById("photo-viewport");
+  const loadStatus = document.getElementById("photo-load-status");
+  const zoom = new window.PhotoZoom(viewport, full,
+    document.getElementById("photo-zoom-toggle"), document.getElementById("photo-zoom-level"));
   let photos = [];
   let current = 0;
   let activeTrigger = null;
 
   function fitPhoto() {
-    if (!dialog.open || !full.naturalWidth || !full.naturalHeight) return;
+    if (!dialog.open) return;
+    const photo = photos[current];
+    const imageWidth = photo?.width || full.naturalWidth;
+    const imageHeight = photo?.height || full.naturalHeight;
+    if (!imageWidth || !imageHeight) return;
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
     const maxWidth = Math.max(1, window.innerWidth - 2 * rem);
-    let width = Math.min(full.naturalWidth, maxWidth);
+    let width = Math.min(imageWidth, maxWidth);
+    dialog.style.setProperty("--photo-ratio", `${imageWidth} / ${imageHeight}`);
     // Match the caption's left edge to the actual image, including portrait shots.
     // Remeasure wrapped text at the resulting width before the final fit.
     for (let pass = 0; pass < 3; pass++) {
@@ -25,9 +34,10 @@
         + document.querySelector(".photo-meta-row").offsetHeight
         + (controls.hidden ? 0 : controls.offsetHeight) + 2 * rem;
       const height = Math.max(1, window.innerHeight - chrome);
-      width = Math.min(width, height * full.naturalWidth / full.naturalHeight);
+      width = Math.min(width, height * imageWidth / imageHeight);
     }
     dialog.style.setProperty("--photo-width", `${width}px`);
+    zoom.render();
   }
 
   function text(value) {
@@ -69,6 +79,11 @@
     if (trigger) activeTrigger = trigger;
     current = (index + photos.length) % photos.length;
     const photo = photos[current];
+    zoom.setEnabled(false);
+    viewport.classList.add("is-loading");
+    viewport.classList.remove("has-error");
+    loadStatus.textContent = "Loading photograph…";
+    loadStatus.hidden = false;
     full.src = photo.src;
     full.alt = photo.alt;
     title.textContent = photo.title;
@@ -79,15 +94,32 @@
       dialog.showModal();
       document.documentElement.classList.add("photo-viewer-open");
     }
-    if (full.complete) fitPhoto();
+    fitPhoto();
+    if (full.complete && full.naturalWidth) imageLoaded();
   }
 
-  full.addEventListener("load", fitPhoto);
+  function imageLoaded() {
+    if (!dialog.open) return;
+    viewport.classList.remove("is-loading", "has-error");
+    loadStatus.hidden = true;
+    zoom.setEnabled(true);
+    fitPhoto();
+  }
+
+  full.addEventListener("load", imageLoaded);
+  full.addEventListener("error", () => {
+    viewport.classList.remove("is-loading");
+    viewport.classList.add("has-error");
+    loadStatus.textContent = "This photograph could not be loaded. Please try again.";
+    loadStatus.hidden = false;
+    zoom.setEnabled(false);
+  });
   window.addEventListener("resize", fitPhoto);
   document.getElementById("photo-close").addEventListener("click", () => dialog.close());
   document.getElementById("photo-previous").addEventListener("click", () => show(current - 1));
   document.getElementById("photo-next").addEventListener("click", () => show(current + 1));
   dialog.addEventListener("close", () => {
+    zoom.setEnabled(false);
     document.documentElement.classList.remove("photo-viewer-open");
     activeTrigger?.focus({ preventScroll: true });
     activeTrigger = null;
@@ -96,6 +128,7 @@
     if (event.target === dialog) dialog.close();
   });
   dialog.addEventListener("keydown", (event) => {
+    if (zoom.handleKey(event)) return;
     if (event.key === "ArrowLeft") { event.preventDefault(); show(current - 1); }
     if (event.key === "ArrowRight") { event.preventDefault(); show(current + 1); }
   });

@@ -10,7 +10,7 @@
 .gallery-note { color: var(--muted); font-size: .875rem; margin-top: 1rem; }
 .gallery-grid { columns: 3; column-gap: 1.5rem; }
 .gallery-photo { break-inside: avoid; margin: 0 0 1.5rem; }
-.gallery-link { position: relative; display: block; overflow: hidden; color: white; }
+.gallery-link { position: relative; display: block; overflow: hidden; color: white; cursor: zoom-in; }
 .gallery-link:hover { color: white; text-decoration: none; }
 .gallery-photo img { width: 100%; height: auto; transition: filter .2s ease; }
 .photo-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: .45rem; padding: 1.5rem 1rem; color: white; text-align: center; background: linear-gradient(transparent 20%, rgb(0 0 0 / .12) 50%, rgb(0 0 0 / .65)); opacity: 0; transition: opacity .2s ease; pointer-events: none; }
@@ -23,13 +23,24 @@
 .photo-dialog { width: fit-content; max-width: calc(100vw - 2rem); max-height: calc(100dvh - 1.5rem); padding: 0; border: 0; background: transparent; color: #fff; }
 .photo-dialog::backdrop { background: rgb(0 0 0 / .82); }
 .photo-stage { width: var(--photo-width, min(90vw, 1100px)); max-width: calc(100vw - 2rem); margin: 0; }
-.photo-stage img { width: 100%; height: auto; object-fit: contain; margin: 0; box-shadow: 0 2px 14px rgb(0 0 0 / .3); }
+.photo-viewport { position: relative; width: 100%; aspect-ratio: var(--photo-ratio, 3 / 2); overflow: hidden; background: #151515; cursor: zoom-in; touch-action: none; overscroll-behavior: contain; box-shadow: 0 2px 14px rgb(0 0 0 / .3); }
+.photo-viewport:focus-visible { outline: 2px solid white; outline-offset: -2px; }
+.photo-viewport.is-zoomed { cursor: grab; }
+.photo-viewport.is-dragging { cursor: grabbing; }
+.photo-viewport img { width: 100%; height: 100%; object-fit: contain; margin: 0; transform-origin: 0 0; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.photo-viewport.is-zoomed img { will-change: transform; }
+.photo-viewport.is-loading img, .photo-viewport.has-error img { opacity: 0; }
+.photo-load-status { position: absolute; inset: 0; display: grid; place-items: center; padding: 1rem; color: #eee; text-align: center; font-size: .875rem; pointer-events: none; }
+.photo-load-status[hidden] { display: none; }
 .photo-meta-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.25rem; padding-top: .6rem; text-align: left; }
 .lightbox-caption { min-width: 0; line-height: 1.45; font-size: 1rem; overflow-wrap: anywhere; }
 .lightbox-title { margin-right: .35em; }
 .lightbox-credit { color: #e1e1e1; }
 .photo-counter { flex-shrink: 0; font-size: .8rem; line-height: 1.8; color: #ddd; white-space: nowrap; }
-.dialog-top { display: flex; justify-content: flex-end; }
+.dialog-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.photo-zoom-tools { display: flex; align-items: center; gap: .75rem; }
+.photo-zoom-level { min-width: 3em; color: #ccc; font-size: .8rem; }
+.photo-dialog button:disabled { opacity: .45; cursor: default; }
 .photo-dialog button { min-width: 44px; min-height: 44px; border: 0; background: none; color: #eee; cursor: pointer; font: inherit; padding: .35rem .5rem; }
 .photo-dialog button:focus-visible { outline-color: #fff; outline-offset: -3px; }
 #photo-close { font-size: 2rem; line-height: 1; padding-right: 0; text-align: right; }
