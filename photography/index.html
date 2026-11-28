@@ -9,8 +9,8 @@
   <link rel="canonical" href="https://chunzheng2022.github.io/photography/">
   <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=gallery-20261119">
-  <link rel="stylesheet" href="gallery.css">
-  <script src="gallery.js" defer></script>
+  <link rel="stylesheet" href="gallery.css?v=credits-20261128">
+  <script src="gallery.js?v=credits-20261128" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to photographs</a>
@@ -35,15 +35,17 @@
       <p><a href="../">Back to homepage</a></p>
     </footer>
   </div>
-  <dialog class="photo-dialog" id="photo-dialog" aria-label="Photograph viewer">
-    <div class="dialog-top"><button type="button" id="photo-close">Close</button></div>
-    <figure>
+  <dialog class="photo-dialog" id="photo-dialog" aria-labelledby="photo-title" aria-describedby="photo-copyright">
+    <div class="dialog-top"><button type="button" id="photo-close" aria-label="Close photograph" autofocus><span aria-hidden="true">×</span></button></div>
+    <figure class="photo-stage">
       <img id="photo-full" alt="">
-      <figcaption id="photo-caption"></figcaption>
+      <figcaption class="photo-meta-row">
+        <span id="photo-caption" class="lightbox-caption"><span id="photo-title" class="lightbox-title"></span> <span id="photo-copyright" class="lightbox-credit"></span></span>
+        <span id="photo-counter" class="photo-counter" aria-live="polite"></span>
+      </figcaption>
     </figure>
     <nav class="photo-controls" aria-label="Photograph navigation" hidden>
       <button type="button" id="photo-previous">Previous</button>
-      <span id="photo-counter" aria-live="polite"></span>
       <button type="button" id="photo-next">Next</button>
     </nav>
   </dialog>
