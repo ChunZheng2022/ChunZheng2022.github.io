@@ -58,12 +58,35 @@ Later the same day, the user requested ten more selections and a cover-based alb
 | DSC_0691.JPG | Backlit pavilion roof; deliberate silhouette and sunburst. |
 | DSC_0708.JPG | Stone gateway under blue sky and autumn trees; an architectural landmark. |
 
-Final order, retaining camera frame numbers: **0684, 0614, 0593, 0702, 0570, 0626, 0660, 0666, 0647, 0649, 0641, 0637, 0619, 0611, 0599, 0581, 0691, 0654, 0673, 0700, 0650, 0615, 0708, 0706, 0704**. Original photographs retain their relative order. Frame **0684** remains the album cover.
+Order at the 25-photo stage, retaining camera frame numbers: **0684, 0614, 0593, 0702, 0570, 0626, 0660, 0666, 0647, 0649, 0641, 0637, 0619, 0611, 0599, 0581, 0691, 0654, 0673, 0700, 0650, 0615, 0708, 0706, 0704**. Original photographs retain their relative order. Frame **0684** remains the album cover.
 
 The ten additions use the same export settings above. Existing exports were not changed; SHA-256 checks confirmed that the ten source JPGs and all thirty existing exports remained unchanged. The 25 full images total **32.71 MB**; their previews total **4.17 MB**. Only resized JPGs are published, with orientation applied and without camera/location EXIF.
 
 `photography/index.html` is now a static album-cover index. The album page and its photo manifest are `photography/tianping-mountain/index.html` and `photos.json`; shared assets remain one level above. Photo URLs in the manifest use `../images/tianping-mountain/`. The album retains click-to-open, titles and copyright, 1–4× zoom, click-point magnification, dragging, wheel/touch pinch, and keyboard controls. The previous flat root manifest has been moved into the album.
 
 All fifty exports reopened successfully with their manifest dimensions and without EXIF. All twenty-five source JPG hashes were verified. Sixteen jsdom interaction checks passed, including album-cover routing, relative photo paths from the nested page, and zoom on a newly added photograph. Local HTTP checks passed for both pages, the new manifest, and every referenced stylesheet, script, icon, and cover image.
+
+## Reviewed additions and user replacement (35 photographs)
+
+The user requested another ten selections for local preview before publication. A ten-photo proposal was shown with numbered contact sheets and selection reasons. The user then approved publication after replacing **candidate 09, DSC_0616 (yellow-wall corner)** with the attached bright autumn-leaf photograph. The attachment's SHA-256 exactly matches **DSC_0699.JPG** in the original folder. The supplied photograph was exported directly; its color and composition were preserved.
+
+These ten photographs are appended in their reviewed order, keeping the existing 25 entries unchanged:
+
+| Album position | Source JPG | Subject |
+| --- | --- | --- |
+| 26 | DSC_0679.JPG | Wooded mountain and its reflection across the pond. |
+| 27 | DSC_0653.JPG | Sunlit yellow garden walls, green leaves, and tiled eaves. |
+| 28 | DSC_0668.JPG | Visitors silhouetted on a lakeside wooden boardwalk. |
+| 29 | DSC_0568.JPG | Diagonal trunk and orange leaves above rippled water. |
+| 30 | DSC_0642.JPG | Golden branches against a clear blue sky. |
+| 31 | DSC_0701.JPG | A canopy filled with red maple leaves. |
+| 32 | DSC_0578.JPG | Stone gateway amid red maples and autumn visitors. |
+| 33 | DSC_0600.JPG | A portrait view from woodland to the city and distant hills. |
+| 34 | DSC_0699.JPG | User's replacement: sunlit golden leaves, red trees, and blue sky. |
+| 35 | DSC_0694.JPG | Curving branches through layered red and gold foliage. |
+
+DSC_0616 is not included in the published album. This batch uses the same export settings as earlier additions, including orientation correction for the portrait view. Input source hashes were checked against the preview records; the supplied replacement and matching original remain unchanged. Hashes also confirmed that all 50 pre-existing website exports were untouched. All 70 exports reopened successfully with correct dimensions and without EXIF. The 35 full images total **48.93 MB** and their previews **6.21 MB**. Album-cover and page photo counts were updated to 35; the cover and gallery/zoom code are unchanged.
+
+Sixteen jsdom interaction checks passed, including matching album counts, opening the user's replacement at its full image URL, keeping the rejected candidate out of the manifest, detail zoom, and navigation through the expanded album.
 
 Source: user request and local file review in Codex chat `01a1f27d-cc70-7393-980d-5a97acf13de4`, November 28, 2026.

@@ -313,14 +313,16 @@ test("the photography cover opens a separate album with matching photo count and
   assert.equal(link.href, "https://chunzheng2022.github.io/photography/tianping-mountain/");
   assert.equal(index.window.document.querySelector("dialog"), null, "cover navigation opens the album, not an image modal");
   const photos = JSON.parse(fs.readFileSync(path.join(root, albumPath, "photos.json"), "utf8"));
-  assert.equal(photos.length, 25);
-  assert.match(link.textContent, /25 photographs/);
+  assert.ok(photos.length > 0);
+  assert.match(link.textContent, new RegExp(`\\b${photos.length} photographs\\b`));
   const album = new JSDOM(html, { url: link.href });
   t.after(() => album.window.close());
   assert.equal(album.window.document.querySelector("h1").textContent, "Tianping Mountain");
+  assert.match(album.window.document.querySelector(".gallery-heading p").textContent,
+    new RegExp(`\\b${photos.length} photographs\\b`));
   assert.equal(album.window.document.querySelector(".gallery-nav-links a").href,
     "https://chunzheng2022.github.io/photography/");
-  assert.equal(new Set(photos.map(p => p.src)).size, 25);
+  assert.equal(new Set(photos.map(p => p.src)).size, photos.length);
   for (const file of [link.querySelector("img").src, ...photos.flatMap(p => [
     new URL(p.src, link.href).href, new URL(p.thumbnail, link.href).href,
   ])]) {
@@ -334,15 +336,19 @@ test("real album data resolves all images from the nested page and keeps detail 
   const g = await gallery(t, photos);
   const z = zoomSurface(g);
   const links = g.document.querySelectorAll(".gallery-link");
-  assert.equal(links.length, 25);
-  g.click(links[2]); // A newly added photo, not one of the original 15.
+  assert.equal(links.length, photos.length);
+  const replacement = photos.findIndex(p => p.src.endsWith("tianping-mountain-0699.jpg"));
+  assert.ok(replacement >= 0, "include the user's bright autumn-leaf replacement");
+  assert.equal(photos.some(p => p.src.endsWith("tianping-mountain-0616.jpg")), false,
+    "the rejected yellow-wall corner must not be published");
+  g.click(links[replacement]);
   assert.equal(g.query("#photo-full").src,
-    "https://chunzheng2022.github.io/photography/images/tianping-mountain/tianping-mountain-0593.jpg");
-  assert.equal(g.query("#photo-counter").textContent, "3 of 25");
+    "https://chunzheng2022.github.io/photography/images/tianping-mountain/tianping-mountain-0699.jpg");
+  assert.equal(g.query("#photo-counter").textContent, `${replacement + 1} of ${photos.length}`);
   loadPhoto(g);
   g.click(z.viewport, { clientX: 220, clientY: 130 });
   assert.equal(g.query("#photo-zoom-level").textContent, "250%");
   g.click("#photo-next");
-  assert.equal(g.query("#photo-counter").textContent, "4 of 25");
+  assert.equal(g.query("#photo-counter").textContent, `${(replacement + 1) % photos.length + 1} of ${photos.length}`);
   assert.equal(g.query("#photo-zoom-level").textContent, "Fit");
 });

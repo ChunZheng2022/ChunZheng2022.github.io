@@ -1,6 +1,6 @@
 # Photography albums
 
-The photography homepage at https://chunzheng2022.github.io/photography/ lists album covers. Click **Tianping Mountain** to open its 25 photographs at https://chunzheng2022.github.io/photography/tianping-mountain/ . The photographs were selected from the user's November 28, 2026 visit to Suzhou. Selection and export details are in [the collection notes](../docs/photography/tianping-mountain-20261128.md).
+The photography homepage at https://chunzheng2022.github.io/photography/ lists album covers. Click **Tianping Mountain** to open its 35 photographs at https://chunzheng2022.github.io/photography/tianping-mountain/ . The photographs were selected from the user's November 28, 2026 visit to Suzhou. Selection and export details are in [the collection notes](../docs/photography/tianping-mountain-20261128.md).
 
 ## Add photos to Tianping Mountain
 
