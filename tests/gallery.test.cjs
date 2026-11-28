@@ -5,14 +5,15 @@ const path = require("node:path");
 const { JSDOM } = require("../.preview/qa/node_modules/jsdom");
 
 const root = path.resolve(__dirname, "..");
-const html = fs.readFileSync(path.join(root, "photography/index.html"), "utf8");
+const albumPath = "photography/tianping-mountain";
+const html = fs.readFileSync(path.join(root, albumPath, "index.html"), "utf8");
 const script = fs.readFileSync(path.join(root, "photography/gallery.js"), "utf8");
 const zoomScript = fs.readFileSync(path.join(root, "photography/photo-zoom.js"), "utf8");
 const sample = (fields = {}) => ({ src: "images/sunset.jpg", alt: "Sunset over a lake", ...fields });
 
 async function gallery(t, entries, { supported = true, responseOk = true } = {}) {
   const dom = new JSDOM(html, {
-    url: "https://chunzheng2022.github.io/photography/",
+    url: "https://chunzheng2022.github.io/photography/tianping-mountain/",
     runScripts: "outside-only",
     pretendToBeVisual: true,
   });
@@ -127,7 +128,7 @@ test("empty collections and failed manifests keep the empty state", async (t) =>
 test("unsupported dialog browsers retain direct links to the image", async (t) => {
   const g = await gallery(t, [sample()], { supported: false });
   const link = g.query(".gallery-link");
-  assert.equal(link.href, "https://chunzheng2022.github.io/photography/images/sunset.jpg");
+  assert.equal(link.href, "https://chunzheng2022.github.io/photography/tianping-mountain/images/sunset.jpg");
   // Capture the event before the browser would navigate, so jsdom need not do so.
   let prevented;
   link.addEventListener("click", (event) => { prevented = event.defaultPrevented; event.preventDefault(); });
@@ -169,11 +170,11 @@ test("the grid loads small previews while the viewer opens the full photograph",
     src: "images/full.jpg", thumbnail: "images/thumbnails/full.jpg", width: 1707, height: 2560,
   })]);
   const image = g.query(".gallery-photo img");
-  assert.equal(image.src, "https://chunzheng2022.github.io/photography/images/thumbnails/full.jpg");
+  assert.equal(image.src, "https://chunzheng2022.github.io/photography/tianping-mountain/images/thumbnails/full.jpg");
   assert.equal(image.width, 1707);
   assert.equal(image.height, 2560);
   g.click(".gallery-link");
-  assert.equal(g.query("#photo-full").src, "https://chunzheng2022.github.io/photography/images/full.jpg");
+  assert.equal(g.query("#photo-full").src, "https://chunzheng2022.github.io/photography/tianping-mountain/images/full.jpg");
 });
 
 test("an invalid optional thumbnail falls back to the full image", async (t) => {
@@ -181,7 +182,7 @@ test("an invalid optional thumbnail falls back to the full image", async (t) => 
   const images = g.document.querySelectorAll(".gallery-photo img");
   assert.equal(images.length, 2);
   for (const image of images) {
-    assert.equal(image.src, "https://chunzheng2022.github.io/photography/images/sunset.jpg");
+    assert.equal(image.src, "https://chunzheng2022.github.io/photography/tianping-mountain/images/sunset.jpg");
     assert.equal(image.hasAttribute("width"), false);
   }
 });
@@ -301,4 +302,47 @@ test("failed full images disable zoom and display a readable status", async (t) 
   assert.equal(g.query("#photo-zoom-toggle").disabled, true);
   assert.equal(g.query("#photo-load-status").hidden, false);
   assert.match(g.query("#photo-load-status").textContent, /could not be loaded/);
+});
+
+test("the photography cover opens a separate album with matching photo count and navigation", (t) => {
+  const index = new JSDOM(fs.readFileSync(path.join(root, "photography/index.html"), "utf8"), {
+    url: "https://chunzheng2022.github.io/photography/",
+  });
+  t.after(() => index.window.close());
+  const link = index.window.document.querySelector(".album-link");
+  assert.equal(link.href, "https://chunzheng2022.github.io/photography/tianping-mountain/");
+  assert.equal(index.window.document.querySelector("dialog"), null, "cover navigation opens the album, not an image modal");
+  const photos = JSON.parse(fs.readFileSync(path.join(root, albumPath, "photos.json"), "utf8"));
+  assert.equal(photos.length, 25);
+  assert.match(link.textContent, /25 photographs/);
+  const album = new JSDOM(html, { url: link.href });
+  t.after(() => album.window.close());
+  assert.equal(album.window.document.querySelector("h1").textContent, "Tianping Mountain");
+  assert.equal(album.window.document.querySelector(".gallery-nav-links a").href,
+    "https://chunzheng2022.github.io/photography/");
+  assert.equal(new Set(photos.map(p => p.src)).size, 25);
+  for (const file of [link.querySelector("img").src, ...photos.flatMap(p => [
+    new URL(p.src, link.href).href, new URL(p.thumbnail, link.href).href,
+  ])]) {
+    const local = path.join(root, new URL(file).pathname);
+    assert.ok(fs.existsSync(local), `Published image exists: ${local}`);
+  }
+});
+
+test("real album data resolves all images from the nested page and keeps detail zoom", async (t) => {
+  const photos = JSON.parse(fs.readFileSync(path.join(root, albumPath, "photos.json"), "utf8"));
+  const g = await gallery(t, photos);
+  const z = zoomSurface(g);
+  const links = g.document.querySelectorAll(".gallery-link");
+  assert.equal(links.length, 25);
+  g.click(links[2]); // A newly added photo, not one of the original 15.
+  assert.equal(g.query("#photo-full").src,
+    "https://chunzheng2022.github.io/photography/images/tianping-mountain/tianping-mountain-0593.jpg");
+  assert.equal(g.query("#photo-counter").textContent, "3 of 25");
+  loadPhoto(g);
+  g.click(z.viewport, { clientX: 220, clientY: 130 });
+  assert.equal(g.query("#photo-zoom-level").textContent, "250%");
+  g.click("#photo-next");
+  assert.equal(g.query("#photo-counter").textContent, "4 of 25");
+  assert.equal(g.query("#photo-zoom-level").textContent, "Fit");
 });

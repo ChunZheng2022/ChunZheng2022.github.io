@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Tianping Mountain · Photography · Chunzheng Li</title>
+  <meta name="description" content="Tianping Mountain in autumn: photographs of Suzhou's colorful trees, quiet ponds, and temple details by Chunzheng Li.">
+  <link rel="canonical" href="https://chunzheng2022.github.io/photography/tianping-mountain/">
+  <link rel="icon" type="image/svg+xml" href="../../images/favicon.svg">
+  <link rel="stylesheet" href="../../styles.css?v=gallery-20261119">
+  <link rel="stylesheet" href="../gallery.css?v=albums-20261128">
+  <script src="../photo-zoom.js?v=zoom-20261128" defer></script>
+  <script src="../gallery.js?v=albums-20261128" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to photographs</a>
+  <div class="gallery-page">
+    <nav class="gallery-nav" aria-label="Main navigation">
+      <a href="../../">Chunzheng Li</a>
+      <div class="gallery-nav-links"><a href="../">All albums</a><a href="../../#research">Research</a></div>
+    </nav>
+    <main id="main">
+      <header class="gallery-heading">
+        <h1>Tianping Mountain</h1>
+        <p>Suzhou · <time datetime="2026-11-28">November 28, 2026</time> · 25 photographs</p>
+      </header>
+      <div class="gallery-empty" id="gallery-empty">
+        <p>Loading photographs…</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid" aria-label="Photographs" hidden></div>
+      <noscript><p class="gallery-note">Enable JavaScript to browse the photo collection when photographs are available.</p></noscript>
+    </main>
+    <footer>
+      <p>Photographs by Chunzheng Li.</p>
+      <p><a href="../">All albums</a></p>
+    </footer>
+  </div>
+  <dialog class="photo-dialog" id="photo-dialog" aria-labelledby="photo-title" aria-describedby="photo-copyright">
+    <div class="dialog-top">
+      <div class="photo-zoom-tools">
+        <button type="button" id="photo-zoom-toggle" aria-pressed="false" disabled>Zoom in</button>
+        <span id="photo-zoom-level" class="photo-zoom-level" aria-live="polite">Fit</span>
+      </div>
+      <button type="button" id="photo-close" aria-label="Close photograph" autofocus><span aria-hidden="true">×</span></button>
+    </div>
+    <figure class="photo-stage">
+      <div class="photo-viewport" id="photo-viewport" tabindex="0" aria-label="Photo detail view. Click to zoom, drag to explore, or use plus, minus, and zero keys.">
+        <img id="photo-full" alt="" draggable="false">
+        <span class="photo-load-status" id="photo-load-status" role="status" hidden>Loading photograph…</span>
+      </div>
+      <figcaption class="photo-meta-row">
+        <span id="photo-caption" class="lightbox-caption"><span id="photo-title" class="lightbox-title"></span> <span id="photo-copyright" class="lightbox-credit"></span></span>
+        <span id="photo-counter" class="photo-counter" aria-live="polite"></span>
+      </figcaption>
+    </figure>
+    <nav class="photo-controls" aria-label="Photograph navigation" hidden>
+      <button type="button" id="photo-previous">Previous</button>
+      <button type="button" id="photo-next">Next</button>
+    </nav>
+  </dialog>
+</body>
+</html>

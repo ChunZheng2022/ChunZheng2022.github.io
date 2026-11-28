@@ -123,4 +123,6 @@ Use case: precise-object-edit. Edit Image 1, the current QR artwork, using Image
 
 ## Photography
 
-The `/photography/` page currently contains an empty collection, with no invented photographs. Additions are driven by the static `photography/photos.json` file. The gallery supports portrait and landscape images, captions, an enlarged view, keyboard navigation, and an empty state. The homepage links to it from the profile navigation.
+The `/photography/` page lists album covers. Its first album, **Tianping Mountain**, contains 25 photographs taken and supplied by Chunzheng Li from the November 28, 2026 visit to Suzhou. Its page and static manifest live under `photography/tianping-mountain/`; published image files and thumbnails remain under `photography/images/tianping-mountain/`. The fifteen initial selections were expanded by ten at the user's request. Full images have a maximum long edge of 2560 pixels and thumbnails 900 pixels; only orientation, resizing, and JPEG encoding were applied. Originals and RAW files remain in the source folder. See [the selection and export notes](photography/tianping-mountain-20261128.md).
+
+Shared gallery code supports portrait and landscape images, title/copyright overlays, an enlarged view, detail zoom and panning, touch pinch, keyboard navigation, and an empty state. Reference-site screenshots are not included as user photographs. The homepage links to the album index from the profile navigation.
